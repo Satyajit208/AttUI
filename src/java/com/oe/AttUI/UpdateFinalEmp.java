@@ -6,6 +6,7 @@ package com.oe.AttUI;
  * and open the template in the editor.
  */
 
+import com.oe.connection.DatabaseConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -34,28 +35,16 @@ Connection con= null;
 
 Statement st=null;
 
-public void init()throws ServletException {
 
-try
-
-{
-
-Class.forName("com.mysql.jdbc.Driver");
-
-con=DriverManager.getConnection("jdbc:mysql://LocalHost:3306/test","root","1234");
-
-st=con.createStatement();
-
-}
-
-catch(ClassNotFoundException | SQLException ce)
-
-{}
-
-}
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            con = DatabaseConnection.getConnection();
+            st = con.createStatement();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String empid,empname,empemail,empdes;
@@ -73,9 +62,10 @@ catch(ClassNotFoundException | SQLException ce)
             } catch (SQLException ex) {
                 Logger.getLogger(AddEmp.class.getName()).log(Level.SEVERE, null, ex);
             }
-            out.println("Records Updated Sucessfully ");
-            response.sendRedirect("EmpUpdate.html");
-           
+            //out.println("Records Updated Sucessfully ");
+            //response.sendRedirect("EmpUpdate.jsp");
+           request.setAttribute("error", "Update Successfull");
+                    request.getRequestDispatcher("/EmpUpdate.jsp").forward(request, response);
             }
         }
     

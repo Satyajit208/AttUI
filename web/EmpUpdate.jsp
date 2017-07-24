@@ -1,38 +1,26 @@
-<!DOCTYPE>
+
 
 <html>
     <head>
         <title>Update Employee</title>
-        <link href="./css/bootstrap.min.css" rel="stylesheet" />
-         <link href="css\bootstrap.min.css" rel="stylesheet">
-        <link href="./css/bootstrap-datepicker.min.css" rel="stylesheet" />
-        <link href="./css/bootstrap-datepicker3.min.css" rel="stylesheet" />
+        <%@include file="/Design/BootstrapLinks.jsp"  %>
         
     </head>
     <body>
-        <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="MainMenu.html">ObjectEdge Attendance</a>
-    </div >
-    <ul class="nav navbar-nav">
-      <li ><a href="MainMenu.html">Home</a></li>
-      <li><a href="EmpAdd.html">Add Employees</a></li>
-      <li class="active"><a href="EmpUpdate.html">Update Employee</a></li>
-      <li><a href="FormVacation.html">Going on Vacation</a></li>
-      <li><a href="wfh.html">Working From Home</a></li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Know Your Details
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="EmpDet.jsp">Employee Details</a></li>
-          <li><a href="EmpVac.jsp">Employee Vacations</a></li>
-          <li><a href="EmpWfh.jsp">Work From Home</a></li>
-        </ul></ul>
-  </div>
-</nav>
+        <%@include file="/Design/navigation.jsp"  %>
+        <%@include file="/Design/dispmodal.jsp"  %>
+        <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <c:set var="error" value="${error}" scope="request" />
+
         <div class="container">
             <h2>Update Form</h2>
+             <c:if test="${not empty error}">
+                <span id="form-error" style="display:none;">
+                    <c:out value="${error}"/>
+                </span>
+                
+               <c:set var="error" value="" />
+            </c:if>
             
             <form action="UpdateEmp" method="post" class="form-horizontal"  data-toggle="validator" role="form">
                 <div class="form-group">
@@ -57,12 +45,22 @@
 
             </form>
         </div>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
+        
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="./js/bootstrap.min.js"></script>
         <script src="./js/bootstrap-datepicker.min.js"></script>
         <script src="./js/main.js"></script>
-       
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var formResult = $('#form-result');
+                formResult.text($('#form-error').text());
+                if(formResult.text().length > 1) {
+                    $('#myModal').modal('show');
+                }
+                });
+                
+            
+                
+        </script>
     </body>
 </html>

@@ -6,6 +6,7 @@ package com.oe.AttUI;
  * and open the template in the editor.
  */
 
+import com.oe.connection.DatabaseConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -39,29 +40,17 @@ int result,size;
 float tothours=0,wfhh;
 ResultSet rs;
 
-public void init()throws ServletException {
 
-try
-
-{
-
-Class.forName("com.mysql.jdbc.Driver");
-
-con=DriverManager.getConnection("jdbc:mysql://LocalHost:3306/test","root","1234");
-
-st=con.createStatement();
-
-}
-
-catch(ClassNotFoundException | SQLException ce)
-
-{}
-
-}
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        try {
+            con = DatabaseConnection.getConnection();
+            st = con.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddEmp.class.getName()).log(Level.SEVERE, null, ex);
+        }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) 
         {
@@ -71,44 +60,7 @@ catch(ClassNotFoundException | SQLException ce)
            String replace=request.getParameter("wfhd");
            wfhh=Float.parseFloat(request.getParameter("wfhh"));
              wfhd = replace.replace('/', '-');
-       out.println("<html>\n" +
-"    <head>\n" +
-"        <title>Add Employee</title>\n" +
-"        <link href=\"./css/bootstrap.min.css\" rel=\"stylesheet\" />\n" +
-"         <link href=\"css\\bootstrap.min.css\" rel=\"stylesheet\">\n" +
-"        <link href=\"./css/bootstrap-datepicker.min.css\" rel=\"stylesheet\" />\n" +
-"        <link href=\"./css/bootstrap-datepicker3.min.css\" rel=\"stylesheet\" />\n" +
-"       \n" +
-"    </head>\n" +
-"    <body>\n" +
-"         <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js\"></script>\n" +
-"        <script src=\"./js/bootstrap.min.js\"></script>\n" +
-"        <script src=\"./js/bootstrap-datepicker.min.js\"></script>\n" +
-"        <script src=\"./js/main.js\"></script>\n" +
-"       \n" +
-"        <nav class=\"navbar navbar-inverse\">\n" +
-"  <div class=\"container-fluid\">\n" +
-"    <div class=\"navbar-header\">\n" +
-"      <a class=\"navbar-brand\" href=\"MainMenu.html\">ObjectEdge Attendance</a>\n" +
-"    </div >\n" +
-"    <ul class=\"nav navbar-nav\">\n" +
-"      <li ><a href=\"MainMenu.html\" class=\"active\">Home</a></li>\n" +
-"      <li ><a href=\"EmpAdd.html\">Add Employees</a></li>\n" +
-"      <li ><a href=\"EmpUpdate.html\">Update Employee</a></li>\n" +
-"      <li ><a href=\"FormVacation.html\">Going on Vacation</a></li>\n" +
-"      <li class=\"active\"><a href=\"wfh.html\">Working From Home</a></li>\n" +
-"      <li class=\"dropdown\">\n" +
-"        <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">Know Your Details\n" +
-"        <span class=\"caret\"></span></a>\n" +
-"        <ul class=\"dropdown-menu\">\n" +
-"          <li><a href=\"EmpDet.jsp\">Employee Details</a></li>\n" +
-"          <li><a href=\"EmpVac.jsp\">Employee Vacations</a></li>\n" +
-"          <li><a href=\"EmpWfh.jsp\">Work From Home</a></li>\n" +
-"        </ul>\n" +
-"\n" +
-"    </ul>\n" +
-"  </div>\n" +
-"        </nav></body></html>");
+       
               try { 
              String validation="select count(empid) from empdetails where empid='"+empid+"' and empname='"+empname+"';";
            // out.println(validation);
@@ -123,9 +75,8 @@ catch(ClassNotFoundException | SQLException ce)
                 if(result==0)
                     
                 {
-                out.println("<h3>Id or name not found<h3>");
-                rs.close();
-              // st.close();
+                request.setAttribute("error", "Id or name not found");
+                request.getRequestDispatcher("/wfh.jsp").forward(request, response);
                  
                 
                 }
@@ -162,7 +113,8 @@ catch(ClassNotFoundException | SQLException ce)
                // RequestDispatcher rd = request.getRequestDispatcher("wfh.jsp");
                 //rd.forward(request, response);
                 
-                response.sendRedirect("wfh.html");
+                request.setAttribute("error", "Update Successfull");
+                    request.getRequestDispatcher("/wfh.jsp").forward(request, response);
              // out.println("Records inserted sucessfully");
                 }
   
