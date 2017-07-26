@@ -6,6 +6,7 @@ package com.oe.AttUI;
  * and open the template in the editor.
  */
 
+
 import com.oe.connection.DatabaseConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,9 +38,9 @@ Statement st=null;
 
 
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
+        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        try {//get database connection
             con = DatabaseConnection.getConnection();
             st = con.createStatement();
         } catch (SQLException ex) {
@@ -55,17 +56,19 @@ Statement st=null;
             empdes=request.getParameter("empdes");
             emppl=Float.parseFloat(request.getParameter("emppl"));
             //out.println(empid+","+emppl);
-           String q="update empdetails set empname='"+empname+"' , empemail='"+empemail+"' , empdes='"+empdes+"' , emppl="+emppl+" where empid='"+empid+"';";
-            System.out.println(q);
+
+            //final update 
+           String update="update empdetails set empname='"+empname+"' , empemail='"+empemail+"' , "
+                   + "empdes='"+empdes+"' , emppl="+emppl+" where empid='"+empid+"';";
+            //System.out.println(q);
             try {
-                st.executeUpdate(q);
+                st.executeUpdate(update);
             } catch (SQLException ex) {
                 Logger.getLogger(AddEmp.class.getName()).log(Level.SEVERE, null, ex);
             }
-            //out.println("Records Updated Sucessfully ");
-            //response.sendRedirect("EmpUpdate.jsp");
-           request.setAttribute("error", "Update Successfull");
-                    request.getRequestDispatcher("/EmpUpdate.jsp").forward(request, response);
+            //show message on modal
+        request.setAttribute("error", "Update Successfull");
+        request.getRequestDispatcher("/EmpUpdate.jsp").forward(request, response);
             }
         }
     

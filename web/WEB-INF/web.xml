@@ -36,6 +36,14 @@
         <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>FileUploadServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PopulateTable</servlet-name>
+        <servlet-class>com.oe.getinfo.PopulateTable</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FetchData</servlet-name>
+        <servlet-class>com.oe.getinfo.FetchData</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddEmp</servlet-name>
         <url-pattern>/AddEmp</url-pattern>
@@ -71,6 +79,14 @@
     <servlet-mapping>
         <servlet-name>FileUploadServlet</servlet-name>
         <url-pattern>/FileUploadServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PopulateTable</servlet-name>
+        <url-pattern>/PopulateTable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FetchData</servlet-name>
+        <url-pattern>/FetchData</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

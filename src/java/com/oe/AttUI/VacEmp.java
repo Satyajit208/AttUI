@@ -1,4 +1,4 @@
-package com.oe.AttUI;
+    package com.oe.AttUI;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,11 +23,24 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.JsonObject;
+/**
+ *
+ * @author user1
+ */
 
 
 public class VacEmp extends HttpServlet {
 
     
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     Connection con = null;
 
     Statement st = null;
@@ -41,12 +54,12 @@ public class VacEmp extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            con = DatabaseConnection.getConnection();
-            st = con.createStatement();
-        } catch (SQLException ex) {
-            Logger.getLogger(AddEmp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            try {
+                con = DatabaseConnection.getConnection();
+                st = con.createStatement();
+            } catch (SQLException ex) {
+                Logger.getLogger(AddEmp.class.getName()).log(Level.SEVERE, null, ex);
+            }
         ObjectMapper mapper = new ObjectMapper();
         //JsonObject json = null;
         List<VacationEmp> empVacList = new ArrayList<>();
@@ -137,7 +150,7 @@ public class VacEmp extends HttpServlet {
             if (!empVacList.isEmpty()) {
                 //response.getWriter().write(mapper.writeValueAsString(empVacList));
                // out.print(2);
-                out.println(mapper.writeValueAsString(empVacList));
+                //out.println(mapper.writeValueAsString(empVacList));
                 
                 
               //Result=mapper.writeValueAsString(empVacList);

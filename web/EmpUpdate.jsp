@@ -11,7 +11,10 @@
         <%@include file="/Design/dispmodal.jsp"  %>
         <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <c:set var="error" value="${error}" scope="request" />
-
+        <jsp:include page="FetchData" flush="true" />
+        
+        <c:set var="emps" value="${Information}"/>
+        
         <div class="container">
             <h2>Update Form</h2>
              <c:if test="${not empty error}">
@@ -29,10 +32,19 @@
                         <input type="text" name="empid" placeholder="Enter id" class="form-control" required>
                     </div>
                 </div>
+                
                 <div class="form-group">
                     <label for="empname" class="col-xs-3 control-label">Employee Name</label>
                     <div class="col-xs-5">
-                        <input type="text" name="empname" placeholder="Enter name" class="form-control" required>
+                        
+                        
+                        <select class="form-control" name="empname" placeholder="Enter name" onchange="setEmpId(this)" required>
+                            <option value="">Select Employee Name</option>
+                            
+                            <c:forEach items="${emps}" var="emp">
+                                <option data-id="${emp.empid}" value="${emp.empname}">${emp.empname}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                 </div>
                 
@@ -58,6 +70,16 @@
                     $('#myModal').modal('show');
                 }
                 });
+                
+           var setEmpId = function (elm){
+                //console.log("Hello" + elm.value);
+                var optVal = $(elm).find(':selected').attr('data-id')
+                if(elm.value !== null) {
+                    $("input[name='empid']").val(optVal);
+                } else {
+                    $("input[name='empid']").val();
+                }
+           };     
                 
             
                 

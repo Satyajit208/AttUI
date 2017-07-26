@@ -12,6 +12,10 @@
     </head>
     <body>
         <%@include file="/Design/navigation.jsp"  %>
+        <jsp:include page="FetchData" flush="true" />
+        
+        <c:set var="emps" value="${Information}"/>
+        
         <div class="container">
             <h2>Vacation Form</h2>
             
@@ -34,7 +38,13 @@
                 <div class="form-group">
                     <label for="empname" class="col-xs-3 control-label">Employee Name</label>
                     <div class="col-xs-5">
-                        <input type="text" name="empname" placeholder="Enter name" class="form-control" required>
+                       <select class="form-control" name="empname" placeholder="Enter name" onchange="setEmpId(this)" required>
+                            <option value="">Select Employee Name</option>
+                            
+                            <c:forEach items="${emps}" var="emp">
+                                <option data-id="${emp.empid}" value="${emp.empname}">${emp.empname}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -111,6 +121,15 @@
                 });
                         
             });
+            var setEmpId = function (elm){
+                //console.log("Hello" + elm.value);
+                var optVal = $(elm).find(':selected').attr('data-id')
+                if(elm.value !== null) {
+                    $("input[name='empid']").val(optVal);
+                } else {
+                    $("input[name='empid']").val();
+                }
+           }; 
         </script>
         
        

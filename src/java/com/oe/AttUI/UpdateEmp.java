@@ -24,9 +24,10 @@ import java.util.logging.Logger;
  *
  * @author user1
  */
-public class UpdateEmp extends HttpServlet {
 
-    /**
+
+public class UpdateEmp extends HttpServlet {
+ /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -35,7 +36,7 @@ public class UpdateEmp extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-Connection con= null;
+    Connection con= null;
 
 Statement st=null;
 String id,Name,email,des;
@@ -45,10 +46,10 @@ int result;
 
 
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<UpdateModel> empUpdateList = new ArrayList<>();
-        try {
+                List<UpdateModel> empUpdateList = new ArrayList<>();
+        try {//GET DB CONNECTION
             con = DatabaseConnection.getConnection();
             st = con.createStatement();
         } catch (SQLException ex) {
@@ -63,6 +64,8 @@ int result;
             empname=request.getParameter("empname");
             
              String validation="select count(empid) from empdetails where empid='"+empid+"' and empname='"+empname+"';";
+                System.out.println(validation);
+                
            // out.println(validation);
              
             rs = st.executeQuery(validation);
@@ -81,23 +84,24 @@ int result;
                 else
                 {
                 
-                String q="select * from empdetails where empid='"+empid+"' and empname='"+empname+"';";
-                System.out.println(q);
-                 rs= st.executeQuery(q);
-                while(rs.next())
+            String q="select * from empdetails where empid='"+empid+"' and empname='"+empname+"';";
+          
+            rs= st.executeQuery(q);
+            while(rs.next())
                 {
-                    UpdateModel update=new UpdateModel();
-                 update.setId(rs.getString(1));
-                 update.setName(rs.getString(2));
-                 update.setEmail(rs.getString(3));
-                 update.setDes(rs.getString(4));
-                 update.setPl(Float.parseFloat(rs.getString(5)));
-                  empUpdateList.add(update);
+                UpdateModel update=new UpdateModel();
+                update.setId(rs.getString(1));
+                update.setName(rs.getString(2));
+                update.setEmail(rs.getString(3));
+                update.setDes(rs.getString(4));
+                update.setPl(Float.parseFloat(rs.getString(5)));
+                empUpdateList.add(update);
 //               out.println("<table class=\"table\">");
 //               out.println("<tr><th>Employee Id.</th><th>Employee Name</th><th>Employee Email</th><th>Employee Designation</th>"
 //                       + "<th>Employee Paid-Leaves</th></tr>");
 //                out.println("<tr><th>"+id+"</th><th>"+Name+"</th><th>"+email+"</th><th>"+des+"</th><th>"+pl+"</th></tr>");
-
+               
+                
                 }
                 if(!empUpdateList.isEmpty())
                 {
@@ -106,6 +110,7 @@ int result;
                 
                 
                 }
+                
                     
 
                 
