@@ -22,11 +22,12 @@
             </c:if>
             <h2>Add Employee Form</h2>
 
-            <form id="addEmpForm" action="AddEmp" method="post" class="form-horizontal" data-toggle="validator" role="form">
+            <form id="addEmpForm"  action="AddEmp" method="post" class="form-horizontal" data-toggle="validator" role="form">
                 <div class="form-group">
+                    
                     <label for="empid" class="col-xs-3 control-label">Employee Id</label>
                     <div class="col-xs-5">
-                        <input type="text" name="empid" placeholder="Enter id" class="form-control" required>
+                        <input type="text" autofocus="true" name="empid" placeholder="Enter id" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -52,12 +53,46 @@
                     <div class="col-xs-5">
                         <input type="number" name="emppl" placeholder="Enter paid-leaves" class="form-control" value="0">
                     </div>
-                </div>
+                </div>                                                       
                 <div class="form-group">
-                    <div class="col-xs-5 control-label">
-                        <input type="submit" class="btn btn-lg btn-info btn-default" name="Enter" value="Enter">
+                
+                    <label for="empdoj" class="col-xs-3 control-label">Date Of Joining</label>
+                    <div class="col-xs-5">
+                        <div class="input-group input-append date datepicker" id="toDatePicker">
+                            <input type="text" class="form-control" id="dtTo" name="empdoj" >
+                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="empaddr" class="col-xs-3 control-label">Employee Address</label>
+                    <div class="col-xs-5">
+                        <input type="text" maxlength="78" name="empaddr" placeholder="Enter Address" class="form-control" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <!--<span class="form-group-addon"></span>-->
+
+                    <label for="empcontact" class="col-xs-3 control-label">Employee Contact No</label>
+                    <div class="col-xs-5">
+<!--                        <input type="text" class="form-control bfh-phone"
+                               data-format="+91 dddddddddd">-->
+
+
+                        <input type="tel"  maxlength="10"  pattern="[0-9]{10}" name="empcontact" 
+                               placeholder="Enter Contact number" class="form-control bfh-phone" 
+                                data-format="+91 (ddd)ddd-dddd">
+                    </div>
+                </div>
+                             
+                <div class="form-group">
+                    <div class="col-xs-6 control-label">
+                        <input type="submit" class="btn btn-lg btn-info btn-default" name="Enter" value="Enter"
+                               style="">
+                    </div>
+                    
+                </div>
+                
             </form>
             
             <%@include file="/Design/dispmodal.jsp" %>
@@ -66,8 +101,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="./js/bootstrap.min.js"></script>
         <script src="./js/bootstrap-datepicker.min.js"></script>
-        <script src="./js/main.js"></script>
-        
+        <script src="./js/main2.js"></script>
+        <script src="js/countrySelect.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
                 var formResult = $('#form-result');
@@ -76,7 +111,7 @@
                     $('#myModal').modal('show');
                 }
                 });
-                
+              
         </script>
         
     </body>

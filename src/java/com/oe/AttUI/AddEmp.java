@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.logging.Level;
+import java.util.Date;
 import java.util.logging.Logger;
 import javax.json.JsonObject;
 
@@ -22,10 +24,11 @@ public class AddEmp extends HttpServlet {
     Statement st = null;
     ResultSet rs;
     int result;
-    String empid, empname, empemail, empdes;
+    String empid, empname, empemail, empdes, empaddr, empcontact,empdoj;
     float emppl;
-
-    @Override
+    
+            
+            @Override
     public void init() throws ServletException {
 
     }
@@ -46,6 +49,9 @@ public class AddEmp extends HttpServlet {
         empemail = request.getParameter("empemail");
         empdes = request.getParameter("empdes");
         emppl = Float.parseFloat(request.getParameter("emppl"));
+        empaddr=request.getParameter("empaddr");
+        empcontact=request.getParameter("empcontact");
+        empdoj=request.getParameter("empdoj");
         //out.println(empdes + empemail + empname + empid );
 
         try {
@@ -64,7 +70,7 @@ public class AddEmp extends HttpServlet {
                 request.getRequestDispatcher("/EmpUpdate.jsp").forward(request, response);
             } else {
                 // out.println(empid+","+emppl);
-                String q = "insert into empdetails values('" + empid + "','" + empname + "','" + empemail + "','" + empdes + "'," + emppl + ");";
+                String q = "insert into empdetails values('" + empid + "','" + empname + "','" + empemail + "','" + empdes + "'," + emppl + ",'" + empdoj + "','" + empaddr + "','" + empcontact+"');";
                 // System.out.println(q);
 
                 st.executeUpdate(q);

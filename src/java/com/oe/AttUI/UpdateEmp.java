@@ -5,7 +5,6 @@ package com.oe.AttUI;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import com.oe.connection.DatabaseConnection;
 import com.oe.models.UpdateModel;
 import com.oe.models.VacationEmp;
@@ -20,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author user1
@@ -27,7 +27,8 @@ import java.util.logging.Logger;
 
 
 public class UpdateEmp extends HttpServlet {
- /**
+
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -36,19 +37,17 @@ public class UpdateEmp extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    Connection con= null;
 
-Statement st=null;
-String id,Name,email,des;
-float pl;
-ResultSet rs;
-int result;
+    Connection con = null;
+    Statement st = null;
+    String id, Name, email, des, doj, addr, contact;
+    float pl;
+    ResultSet rs;
+    int result;
 
-
-
-            protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                List<UpdateModel> empUpdateList = new ArrayList<>();
+        List<UpdateModel> empUpdateList = new ArrayList<>();
         try {//GET DB CONNECTION
             con = DatabaseConnection.getConnection();
             st = con.createStatement();
@@ -57,79 +56,59 @@ int result;
         }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+
             try {
-            String empid,empname;
-            empid=request.getParameter("empid");
-            empname=request.getParameter("empname");
-            
-             String validation="select count(empid) from empdetails where empid='"+empid+"' and empname='"+empname+"';";
-                System.out.println(validation);
-                
-           // out.println(validation);
-             
-            rs = st.executeQuery(validation);
-             while (rs.next()) 
-                {
-                 result=rs.getInt(1);
-                //out.println(a);
+                String empid, empname;
+                empid = request.getParameter("empid");
+                empname = request.getParameter("empname");
+                 String validation = "select count(empid) from empdetails where empid='" + empid + "' and empname='" + empname + "';";
+                // out.println(validation);
+
+                rs = st.executeQuery(validation);
+                while (rs.next()) {
+                    result = rs.getInt(1);
+                    //out.println(a);
                 }
-            
-                if(result==0)
+
+                if (result == 0) {
+                    //   out.println("<h3>Id or name not found<h3>");
+
                     
-                {
-                     request.setAttribute("error", "Id or name not found");
+                    
+                    request.setAttribute("error", "Id or name not found");
                     request.getRequestDispatcher("/EmpUpdate.jsp").forward(request, response);
-                }
-                else
-                {
-                
-            String q="select * from empdetails where empid='"+empid+"' and empname='"+empname+"';";
-          
-            rs= st.executeQuery(q);
-            while(rs.next())
-                {
-                UpdateModel update=new UpdateModel();
-                update.setId(rs.getString(1));
-                update.setName(rs.getString(2));
-                update.setEmail(rs.getString(3));
-                update.setDes(rs.getString(4));
-                update.setPl(Float.parseFloat(rs.getString(5)));
-                empUpdateList.add(update);
-//               out.println("<table class=\"table\">");
-//               out.println("<tr><th>Employee Id.</th><th>Employee Name</th><th>Employee Email</th><th>Employee Designation</th>"
-//                       + "<th>Employee Paid-Leaves</th></tr>");
-//                out.println("<tr><th>"+id+"</th><th>"+Name+"</th><th>"+email+"</th><th>"+des+"</th><th>"+pl+"</th></tr>");
-               
-                
-                }
-                if(!empUpdateList.isEmpty())
-                {
-                request.setAttribute("Result",empUpdateList );
-                request.getRequestDispatcher("/updatedetails.jsp").forward(request, response);
-                
-                
-                }
-                
-                    
+                    // st.close();
 
-                
+                } else {
+                String q = "select * from empdetails where empid='" + empid + "' and empname='" + empname + "';";
 
+                rs = st.executeQuery(q);
+                while (rs.next()) 
+                {
+                    UpdateModel update = new UpdateModel();
+                    update.setId(rs.getString(1));
+                    update.setName(rs.getString(2));
+                    update.setEmail(rs.getString(3));
+                    update.setDes(rs.getString(4));
+                    update.setPl(Float.parseFloat(rs.getString(5)));
+                    update.setDoj(rs.getString(6)); //doj
+                    update.setAddr(rs.getString(7)); //addr
+                    update.setContact(rs.getString(8)); //contact
+                    empUpdateList.add(update);
 
                 }
-               
+                if (!empUpdateList.isEmpty()) {
+                    request.setAttribute("Result", empUpdateList);
+                    request.getRequestDispatcher("/updatedetails.jsp").forward(request, response);
+
+                }}
+
             } catch (SQLException ex) {
                 Logger.getLogger(AddEmp.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
 
-           
-            }
         }
-    
-    
-    
-    
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -142,8 +121,7 @@ int result;
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-{
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

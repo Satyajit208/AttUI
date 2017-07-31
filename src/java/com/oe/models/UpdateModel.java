@@ -15,6 +15,9 @@ public class UpdateModel {
     private String Email;
     private String Des;
     private Float pl;
+    private String addr;
+    private String contact;
+    private String doj;
 
     public String getName() {
         return Name;
@@ -55,4 +58,27 @@ public class UpdateModel {
     public void setPl(Float pl) {
         this.pl = pl;
     }
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+     public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+    
+     public String getDoj() {
+        return doj;
+    }
+
+    public void setDoj(String doj) {
+        this.doj = doj;
+    }
+    
 }

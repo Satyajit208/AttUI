@@ -48,25 +48,29 @@ Statement st=null;
         }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String empid,empname,empemail,empdes;
+            String empid,empname,empemail,empdes, empdoj, empaddr, empcontact;
             float emppl;
             empid=request.getParameter("empid");
             empname=request.getParameter("empname");
             empemail=request.getParameter("empemail");
             empdes=request.getParameter("empdes");
             emppl=Float.parseFloat(request.getParameter("emppl"));
+            
+            empdoj=request.getParameter("empdoj");
+            empaddr=request.getParameter("empaddr");
+            empcontact=request.getParameter("empcontact");
             //out.println(empid+","+emppl);
 
             //final update 
            String update="update empdetails set empname='"+empname+"' , empemail='"+empemail+"' , "
-                   + "empdes='"+empdes+"' , emppl="+emppl+" where empid='"+empid+"';";
-            //System.out.println(q);
+                   + "empdes='"+ empdes + "' , emppl=" + emppl + ", empdoj='" + empdoj + "', empaddr='"+ empaddr + "', empcontact='" + empcontact+"'  where empid='"+empid+"';";
+            System.out.println(update);
             try {
                 st.executeUpdate(update);
             } catch (SQLException ex) {
                 Logger.getLogger(AddEmp.class.getName()).log(Level.SEVERE, null, ex);
             }
-            //show message on modal
+           // show message on modal
         request.setAttribute("error", "Update Successfull");
         request.getRequestDispatcher("/EmpUpdate.jsp").forward(request, response);
             }

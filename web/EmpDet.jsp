@@ -55,6 +55,9 @@ rmd=rs.getMetaData();
       <th>Email</th>
       <th>Designation</th>
       <th>Paid-Leaves</th>
+      <th>Date Joined</th>
+      <th>Address</th>
+      <th>Contact</th>
     </tr>
     
   </thead>
@@ -84,7 +87,7 @@ for(int i=1;i<=rmd.getColumnCount();i++)
         for(int i=1;i<=rmd.getColumnCount();i++)
         {
         %> 
-        <td>
+        <td style="width: 200px;">
         <%= rs.getString(i) %>
         </td>
         <%} 

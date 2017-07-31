@@ -5,6 +5,10 @@
         <servlet-class>com.oe.AttUI.AddEmp</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>updatePl</servlet-name>
+        <servlet-class>com.oe.AttUI.updatePl</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AddEmp1</servlet-name>
         <servlet-class>AddEmp1</servlet-class>
     </servlet>
@@ -44,9 +48,21 @@
         <servlet-name>FetchData</servlet-name>
         <servlet-class>com.oe.getinfo.FetchData</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdatePL</servlet-name>
+        <servlet-class>com.oe.AttUI.UpdatePL</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SessionDemo</servlet-name>
+        <servlet-class>SessionDemo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddEmp</servlet-name>
         <url-pattern>/AddEmp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updatePl</servlet-name>
+        <url-pattern>/updatePl</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddEmp1</servlet-name>
@@ -80,17 +96,15 @@
         <servlet-name>FileUploadServlet</servlet-name>
         <url-pattern>/FileUploadServlet</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PopulateTable</servlet-name>
-        <url-pattern>/PopulateTable</url-pattern>
-    </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>FetchData</servlet-name>
         <url-pattern>/FetchData</url-pattern>
     </servlet-mapping>
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
-    </session-config>
+    <servlet-mapping>
+        <servlet-name>UpdatePL</servlet-name>
+        <url-pattern>/UpdatePL</url-pattern>
+    </servlet-mapping>
+    
+  
 </web-app>

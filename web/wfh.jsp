@@ -28,17 +28,17 @@
                <div class="form-group">
                     <label for="empid" class="col-xs-3 control-label">Employee Id</label>
                     <div class="col-xs-5">
-                        <input type="text" name="empid" placeholder="Enter id" class="form-control" required>
+                        <input type="text" name="empid" placeholder="Enter id" class="form-control" required >
                     </div>
                 </div>
-                <div class="form-group">
+                 <div class="form-group">
                     <label for="empname" class="col-xs-3 control-label">Employee Name</label>
                     <div class="col-xs-5">
-                         <select class="form-control" name="empname" placeholder="Enter name" onchange="setEmpId(this)" required>
+                       <select class="form-control" name="empname" autofocus="true" placeholder="Enter name" onchange="setEmpId(this)" required>
                             <option value="">Select Employee Name</option>
                             
                             <c:forEach items="${emps}" var="emp">
-                                <option value="${emp.empid}">${emp.empname}</option>
+                                <option data-id="${emp.empid}" value="${emp.empname}">${emp.empname}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -79,14 +79,15 @@
                     $('#myModal').modal('show');
                 }
                 });
-                var setEmpId = function (elm){
+               var setEmpId = function (elm){
                 //console.log("Hello" + elm.value);
+                var optVal = $(elm).find(':selected').attr('data-id')
                 if(elm.value !== null) {
-                    $("input[name='empid']").val(elm.value);
+                    $("input[name='empid']").val(optVal);
                 } else {
                     $("input[name='empid']").val();
                 }
-           };
+           }; 
             
                 
         </script>

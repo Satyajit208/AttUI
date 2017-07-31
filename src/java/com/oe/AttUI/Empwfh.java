@@ -43,7 +43,28 @@ public class Empwfh extends HttpServlet {
             wfhh = Float.parseFloat(request.getParameter("wfhh"));
             wfhd = replace.replace('/', '-');
 
-            try {//calculate total hours
+            try {
+                 String validation = "select count(empid) from empdetails where empid='" + empid + "' and empname='" + empname + "';";
+                System.out.println(validation);
+
+                rs = st.executeQuery(validation);
+                while (rs.next()) {
+                    result = rs.getInt(1);
+                    //out.println(a);
+                }
+
+                if (result == 0) {
+                    //   out.println("<h3>Id or name not found<h3>");
+
+                    
+                    
+                    request.setAttribute("error", "Id or name not found");
+                    request.getRequestDispatcher("/wfh.jsp").forward(request, response);
+                    // st.close();
+
+                } else {
+
+                //calculate total hours
                 String totalhours = "select empwfhh from empwfh where empid='" + empid + "';";
                 rs = st.executeQuery(totalhours);
                 while (rs.next()) {
@@ -61,7 +82,7 @@ public class Empwfh extends HttpServlet {
                 request.setAttribute("error", "Update Successfull");
                 request.getRequestDispatcher("/wfh.jsp").forward(request, response);
                 // out.println("Records inserted sucessfully");
-
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(AddEmp.class.getName()).log(Level.SEVERE, null, ex);
             }

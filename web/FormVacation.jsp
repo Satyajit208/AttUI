@@ -32,13 +32,13 @@
                <div class="form-group">
                     <label for="empid" class="col-xs-3 control-label">Employee Id</label>
                     <div class="col-xs-5">
-                        <input type="text" name="empid" placeholder="Enter id" class="form-control" required>
+                        <input type="text" name="empid" placeholder="Enter id" class="form-control" required >
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="empname" class="col-xs-3 control-label">Employee Name</label>
                     <div class="col-xs-5">
-                       <select class="form-control" name="empname" placeholder="Enter name" onchange="setEmpId(this)" required>
+                       <select class="form-control" name="empname" autofocus="true" placeholder="Enter name" onchange="setEmpId(this)" required>
                             <option value="">Select Employee Name</option>
                             
                             <c:forEach items="${emps}" var="emp">
